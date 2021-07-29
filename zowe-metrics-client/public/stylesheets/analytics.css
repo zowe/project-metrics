@@ -1,0 +1,252 @@
+/*
+* This program and the accompanying materials are made available under the terms of the
+* Eclipse Public License v2.0 which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-v20.html
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Copyright Contributors to the Zowe Project.
+*
+*/
+
+main {
+    width: 100%;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+section {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    padding: 4vh 2vw;
+    /* background-color: #c2c2c2; */
+    border-radius: 15px;
+    margin: 4vh 0;
+    box-shadow: #414141 0px 25px 50px -12px;
+}
+
+.halfSection {
+    margin: 2vh 0;
+    padding: 2vh 2vw;
+    width: 40%;
+    height: 80%;
+    /* background-color: #aaaaaa; */
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: #414141 0px 25px 50px -12px;
+}
+
+.halfSection > h3,
+section > h3 {
+    margin-bottom: 2vh;
+    font-size: 2rem;
+}
+
+.graphContainer {
+    width: 100%;
+    padding: 1vh 2vw;
+}
+
+.row {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    width: 90%;
+}
+
+table {
+    width: 80%;
+}
+
+th,
+td {
+    text-align: center !important;
+}
+
+#geoTable th,
+#geoTable td {
+    padding: 1vh 1vw;
+}
+
+tr:nth-child(odd) {
+    background-color: #dddddd;
+}
+
+.datepickerRow {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 2vh 0;
+    width: 90%;
+}
+
+.datepicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 40%;
+}
+
+.datepicker > label {
+    font-size: 1.1rem;
+}
+
+.datepicker > input {
+    width: 80%;
+    text-align: center;
+    border: none;
+    /* border-bottom: 2px solid #313131; */
+    border-radius: 5px;
+    box-shadow: #414141 0px 12px 20px -5px;
+    font-size: 1.2rem;
+    padding: 1vh 0;
+    cursor: pointer;
+}
+
+#refreshBtn {
+    width: 15%;
+    padding: 2vh 0;
+    font-size: 1.4rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: #414141 0px 25px 50px -12px;
+    margin: 1vh 0;
+}
+
+#refreshBtn:hover {
+    background-color: #414141;
+    color: #dddddd;
+}
+
+.usersText {
+    font-size: 1.6rem;
+}
+
+.boldSpan {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.dateSelectionRow {
+    width: 70%;
+    -webkit-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    -moz-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    margin: 2vh 0;
+    padding-top: 2vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.selectors {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 80%;
+    margin: 1vh 0;
+}
+
+.datepicker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 40%;
+}
+
+.datepicker > input {
+    width: 90%;
+}
+
+#myTab {
+    padding: 2vh 0;
+    width: 60%;
+    justify-content: space-evenly;
+}
+
+#myTab > li {
+    width: 15%;
+    text-align: center;
+}
+
+.tab-content {
+    min-width: 80%;
+}
+
+.tab-pane {
+    display: flex;
+    align-items: center;
+}
+
+.figureContainer {
+    display: flex;
+    width: 90%;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 2vh 2vw;
+}
+
+.usersText {
+    min-width: 350px;
+    width: 25%;
+    padding: 3vh 0;
+    border-radius: 15px;
+    -webkit-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    -moz-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.sectionTitle {
+    font-size: 3vw;
+}
+
+.tableContainer {
+    width: 80%;
+    height: auto;
+    /* min-height: 600px; */
+    margin: 2vh 0;
+    padding: 4vh 2vw;
+    background: #ececec;
+    /* border-radius: 15px; */
+    -webkit-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    -moz-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.bottomGraphRow {
+    width: 80%;
+    /* height: 600px; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1vh 2vw;
+    margin: 2vh 0;
+    background: #ececec;
+    -webkit-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    -moz-box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+    box-shadow: 0px 0px 64px 0px rgba(65, 65, 65, 1);
+}
+
+.desc {
+    width: 80%;
+    text-align: center;
+}

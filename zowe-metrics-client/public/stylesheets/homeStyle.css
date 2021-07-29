@@ -1,0 +1,147 @@
+/*
+* This program and the accompanying materials are made available under the terms of the
+* Eclipse Public License v2.0 which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-v20.html
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Copyright Contributors to the Zowe Project.
+*
+*/
+
+main {
+    width: 90%;
+    height: 70%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5vh 0;
+}
+
+main > .item {
+    color: #313131;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    min-width: 300px;
+    height: 20vh;
+    min-height: 200px;
+    padding: 2vh 2vw;
+    margin: 1vh 1vw;
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: #414141 0px 25px 50px -12px;
+}
+
+.item:hover {
+    animation-name: spin;
+    animation-duration: 100ms;
+    animation-iteration-count: 2;
+    animation-timing-function: linear;
+    background-color: #f0f0f0;
+    animation-direction: alternate-reverse;
+}
+
+main > .item > h2 {
+    font-size: 4rem;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 2vh;
+}
+
+main > .item > h3 {
+    font-size: 1.5rem;
+    width: 90%;
+    text-align: center;
+}
+
+#report {
+    width: 100%;
+    background-color: #414141;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 2vh 0;
+}
+
+#reportTitle {
+    width: 90%;
+    text-align: center;
+    color: #f0f0f0;
+    font-size: 2.2rem;
+    font-weight: bold;
+    margin: 2vh 0;
+}
+
+.combobox {
+    width: 70%;
+}
+
+.combobox > form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formRow {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 40%;
+    margin: 1vh 0;
+}
+
+.formRow > label {
+    color: #f0f0f0;
+    font-size: 1.3rem;
+    width: 40%;
+}
+
+.formRow > select {
+    width: 70%;
+    font-size: 1rem;
+    text-align: center;
+    border: none;
+    padding: 0.5vh 0;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #313131;
+}
+
+form > button {
+    width: 20%;
+    border-radius: 15px;
+    padding: 1vh 0;
+    margin: 2vh 0;
+    cursor: pointer;
+    color: #313131;
+}
+
+@media (max-width: 900px) {
+    main > .item {
+        min-width: 250px;
+    }
+
+    main > .item > h3 {
+        font-size: 1.4rem;
+    }
+
+    main > .item > h2 {
+        font-size: 3.3rem;
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(-2deg);
+    }
+
+    to {
+        transform: rotate(2deg);
+    }
+}
