@@ -1,0 +1,24 @@
+name: DEPLOY
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: SSH Deployment
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          #                   key: ${{ secrets.GH_ACTION_KEY }}
+          passphrase: ${{ secrets.PWORD }}
+          port: 22
+          script: |
+            cd /home/${{ secrets.USERNAME }}/metrics/project-metrics/zowe-metrics-api
+            git pull
+            cd ../zowe-metrics-client
+            git pull
+            cd ../
+            docker-compose up -d --build

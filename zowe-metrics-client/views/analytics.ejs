@@ -1,0 +1,153 @@
+<!-- 
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='stylesheet' href="/stylesheets/nav.css" />
+    <link rel='stylesheet' href="/stylesheets/analytics.css" />
+    <link rel='stylesheet' href="/stylesheets/simplepicker.css" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Analytics</title>
+</head>
+
+<body>
+    <% include ./partials/navBar %>
+        <main>
+
+            <div class="dateSelectionRow">
+                <h3>Date Range</h3>
+                <div class="selectors">
+                    <div class="datepicker">
+                        <label for="">Start Date</label>
+                        <input type="text" id="startDate" onclick="picker1.open()" readonly />
+                        <input type="date" id="startDateStore" hidden />
+                    </div>
+                    <div class="datepicker">
+                        <label for="">End Date</label>
+                        <input type="text" id="endDate" onclick="picker2.open()" readonly />
+                        <input type="date" id="endDateStore" hidden />
+                    </div>
+                </div>
+                <button id="refreshBtn">Refresh</button>
+                <div class="datepickerRow">
+                    <div id="date1"></div>
+                    <div id="date2"></div>
+                </div>
+            </div>
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="users-tab" data-toggle="tab" href="#users" role="tab"
+                        aria-controls="users" aria-selected="true">Users / Views</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="geography-tab" data-toggle="tab" href="#geography" role="tab"
+                        aria-controls="geography" aria-selected="false">Geography</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="users" role="tabpanel" aria-labelledby="users-tab">
+                    <section>
+                        <h3 class="sectionTitle">Zowe.org Users</h3>
+                        <div class="figureContainer">
+                            <p data-tooltip="Users who have initiated at least one session within the specified date range"
+                                class="usersText" id="users"><span class="boldSpan">
+                                    <%= geo.total['ga:users'] %>
+                                </span>
+                                Total Users
+
+                            </p>
+                            <p data-tooltip="The number of first time users within the specified date range"
+                                class="usersText" id="newUsers"><span class="boldSpan">
+                                    <%= geo.total['ga:newUsers'] %>
+                                </span>New Users</p>
+                            <p data-tooltip="The total number of pages viewed (This includes repeated views of a single page)"
+                                class="usersText" id="newUsers"><span class="boldSpan">
+                                    <%= geo.pageViews %>
+                                </span>Page Views</p>
+                        </div>
+
+                    </section>
+
+                </div>
+                <div class="tab-pane fade" id="geography" role="tabpanel" aria-labelledby="geography-tab">
+                    <section>
+                        <h3 class="sectionTitle">Zowe.org User Location</h3>
+                        <div class="tableContainer">
+                            <p class="desc">
+                                The number of Users and New Users that visited <a
+                                    href="https://www.zowe.org/">Zowe.org</a> within the date range
+                                given.
+                            </p>
+                            <table id="geoTable">
+                                <tr>
+                                    <th>Country</th>
+                                    <th>Users</th>
+                                    <th>New Users</th>
+                                </tr>
+                                <% for(let row of geo.rows){ %>
+                                    <tr>
+                                        <td>
+                                            <%= row[0] %>
+                                        </td>
+                                        <td>
+                                            <%= row[1] %>
+                                        </td>
+                                        <td>
+                                            <%= row[2] %>
+                                        </td>
+                                    </tr>
+                                    <% } %>
+                            </table>
+
+                        </div>
+
+                        <div class="bottomGraphRow">
+                            <div class="graphContainer">
+                                <canvas id="geoGraph" width="100" height="55"></canvas>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+            </div>
+        </main>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+        <script src="/javascripts/simplepicker.js"></script>
+        <script src="/javascripts/analytics.js"></script>
+        <script>
+            let geoData = JSON.parse('<%- JSON.stringify(geo) %>');
+            displayAnalyticsData(geoData);
+        </script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>

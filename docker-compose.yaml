@@ -1,0 +1,39 @@
+version: "3"
+
+services:
+  metrics-api:
+    build: ./zowe-metrics-api/
+    ports:
+      - "3000:3000"
+    container_name: metrics-api
+    depends_on:
+      - "metrics-db"
+    restart: always
+    volumes:
+      - ./PDFStore:/app/PDFStore
+      - ./metricsAnalyticsData.json:/app/metricsAnalyticsData.json
+    env_file:
+      - api.env
+
+  metrics-client:
+    build: ./zowe-metrics-client/
+    ports:
+      - "3001:3001"
+    container_name: metrics-client
+    depends_on:
+      - "metrics-api"
+      - "metrics-db"
+    restart: always
+    env_file:
+      - client.env
+
+  metrics-db:
+    image: mongo
+    container_name: metrics-db
+    restart: always
+    env_file:
+      - db.env
+    volumes:
+      - ./data:/data/db
+      - ./dump:/dump
+    command: [--auth]

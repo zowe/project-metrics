@@ -1,0 +1,87 @@
+<!-- 
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
+ -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    Home
+  </title>
+  <link rel='stylesheet' href='/stylesheets/homeStyle.css' />
+  <link rel='stylesheet' href="/stylesheets/nav.css" />
+</head>
+
+<body>
+  <% include ./partials/navBar %>
+    <main>
+      <div class="item downloadsItem" id="cliItem">
+        <h2 id="cliDownloads">
+          <%= cli %>
+        </h2>
+        <h3>CLI Downloads</h3>
+      </div>
+      <div class="item downloadsItem" id="expItem">
+        <h2 id="explorerDownloads">
+          <%= explorer %>
+        </h2>
+        <h3>Explorer Downloads</h3>
+      </div>
+      <div class="item downloadsItem" id="serversideItem">
+        <h2 id="serversideDownloads">
+          <%= server %>
+        </h2>
+        <h3>Server-side Downloads</h3>
+      </div>
+      <div class="item communityItem" id="prItem">
+        <h2 id="githubPRs">
+          <%= slack %>
+        </h2>
+        <h3>Slack Members</h3>
+      </div>
+      <div class="item communityItem" id="submitItem">
+        <h2 id="githubSubmitters">
+          <%= github %>
+        </h2>
+        <h3>Github Contributors</h3>
+      </div>
+      <div class="item conformantsItem" id="conformantsItem">
+        <h2 id="conformants">
+          <%= conformants %>
+        </h2>
+        <h3>Conformant Zowe Products</h3>
+      </div>
+    </main>
+    <section id="report">
+      <p id="reportTitle">Monthly Community Report</p>
+      <div class="combobox">
+        <form action="/pdf" method="GET">
+          <div class="formRow">
+            <label for="monthSelection">Select Month</label>
+            <select name="targetReport" id="monthSelection">
+              <% for(let i=reports.length - 1; i>= 0; i--){ %>
+                <option value="<%= reports[i] %>">
+                  <%= reports[i] %>
+                </option>
+                <% } %>
+            </select>
+          </div>
+          <button type="submit">Show Report</button>
+        </form>
+      </div>
+    </section>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/javascripts/home.js"></script>
+</body>
+
+</html>

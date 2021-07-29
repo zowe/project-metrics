@@ -1,0 +1,116 @@
+/*
+* This program and the accompanying materials are made available under the terms of the
+* Eclipse Public License v2.0 which accompanies this distribution, and is available at
+* https://www.eclipse.org/legal/epl-v20.html
+*
+* SPDX-License-Identifier: EPL-2.0
+*
+* Copyright Contributors to the Zowe Project.
+*
+*/
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #eeeeee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100vw;
+    min-height: 100vh;
+}
+
+nav {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #414141;
+    width: 100%;
+    padding: 2vh 0;
+}
+
+nav > .title {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+nav > .title > h1 {
+    color: white;
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+nav > .buttons {
+    width: 85%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 2vh 0;
+    border-top: 1px solid #eeeeee;
+    border-bottom: 1px solid #eeeeee;
+    padding: 2vh 0;
+}
+
+nav > .buttons > button {
+    width: 15%;
+    padding: 2vh 0;
+    background-color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+nav > .buttons > button:hover {
+    background-color: #212121;
+    color: #eeeeee;
+}
+
+[data-tooltip]:before {
+    content: attr(data-tooltip);
+    position: absolute;
+    opacity: 0;
+    padding: 1vh 1vw;
+    /* color: #333; */
+    background: #414141;
+    color: #dddddd;
+    border-radius: 10px;
+    box-shadow: 2px 2px 1px silver;
+}
+
+[data-tooltip]:hover:before {
+    opacity: 1;
+    margin-top: 150px;
+    margin-left: 0px;
+    font-size: small;
+    /* width: 45px; */
+}
+
+[data-tooltip]:not([data-tooltip-persistent]):before {
+    pointer-events: none;
+}
+
+@media (max-width: 900px) {
+    nav > .buttons {
+        width: 90%;
+    }
+
+    nav > .buttons > button {
+        width: 22%;
+    }
+}
+
+@media (max-width: 750px) {
+    nav > .title > h1 {
+        color: white;
+        font-size: 7.3vw;
+        text-align: center;
+    }
+}

@@ -1,0 +1,295 @@
+<!-- 
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
+ -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel='stylesheet' href="/stylesheets/nav.css" />
+    <link rel='stylesheet' href="/stylesheets/downloadsStyle.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"
+        integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw=="
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Downloads</title>
+</head>
+
+<body>
+    <% include ./partials/navBar %>
+        <main>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="explorer-tab" data-toggle="tab" href="#explorer" role="tab"
+                        aria-controls="explorer" aria-selected="true">Explorer</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="cli-tab" data-toggle="tab" href="#cli" role="tab" aria-controls="cli"
+                        aria-selected="false">CLI</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="server-tab" data-toggle="tab" href="#server" role="tab"
+                        aria-controls="server" aria-selected="false">Server</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="explorer" role="tabpanel" aria-labelledby="explorer-tab">
+                    <section id="explorer">
+                        <h3 class="sectionTitle">Explorer Downloads</h3>
+                        <div class="row">
+                            <div class="tableContainer">
+                                <p class="desc">Cumulative Downloads from the <a
+                                        href="https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe">VSCode
+                                        Marketplace</a> up until the date
+                                    stated</p>
+                                <table id="explorerCumulativeDownloadsTable">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for(let i=Object.keys(explorer).length - 12>= 0 ?
+                                        Object.keys(explorer).length -
+                                        12 :
+                                        0; i < Object.keys(explorer).length;i++){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= dateToString(Object.keys(explorer)[i]) %>
+                                                </td>
+                                                <td>
+                                                    <%= explorer[Object.keys(explorer)[i]] %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                </table>
+                            </div>
+                            <div class="cumulativeDownloadsGraph">
+                                <p class="desc">The cumulative downloads from the <a
+                                        href="https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe">VSCode
+                                        Marketplace</a> monthly</p>
+                                <canvas id="explorerGraph" width="100" height="70"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bottomGraphRow">
+                            <p class="desc">Downloads of Zowe Explorer each month from the <a
+                                    href="https://marketplace.visualstudio.com/items?itemName=Zowe.vscode-extension-for-zowe">VSCode
+                                    Marketplace</a></p>
+                            <div class="barGraph">
+                                <canvas id="explorerDifferenceGraph" width="100" height="40"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-pane fade" id="cli" role="tabpanel" aria-labelledby="cli-tab">
+                    <section id="cli">
+                        <h3 class="sectionTitle">CLI Downloads</h3>
+                        <div class="row">
+                            <div class="tableContainer cliTableContainer">
+                                <p class="desc">Cumulative Downloads of the Zowe CLI from the <a
+                                        href="https://www.npmjs.com/package/@zowe/cli">NPM registry</a> and the <a
+                                        href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a></p>
+                                <table class="downloadsTable">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for(let i=Object.keys(cli).length - 12>= 0 ? Object.keys(cli).length -
+                                        12 :
+                                        0; i < Object.keys(cli).length;i++){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= dateToString(Object.keys(cli)[i]) %>
+                                                </td>
+                                                <td>
+                                                    <%= cli[Object.keys(cli)[i]] %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                </table>
+                            </div>
+                            <div class="tableContainer cliTableContainer">
+                                <p class="desc">Downloads of Zowe CLI, per version, from the <a
+                                        href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a> only. (Does not
+                                    include the NPM registry downloads)</p>
+                                <table class="downloadsTable">
+                                    <tr>
+                                        <th>Version</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for (let i=11; i>= 0; i--){ %>
+                                        <tr>
+                                            <td>
+                                                <%= Object.keys(versions.sorted.zoweCLI)[i] %>
+                                            </td>
+                                            <td>
+                                                <%= versions.sorted.zoweCLI[Object.keys(versions.sorted.zoweCLI)[i]] %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="bottomGraphRow">
+                            <p class="desc">Cumulative Downloads of the Zowe CLI from both the <a
+                                    href="https://www.npmjs.com/package/@zowe/cli">NPM registry</a> and the <a
+                                    href="https://www.zowe.org/download.html">Zowe.org
+                                    downloads page</a>.</p>
+                            <div class="barGraph">
+                                <canvas id="cliGraph" width="100" height="35"></canvas>
+                            </div>
+                        </div>
+                        <div class="bottomGraphRow">
+                            <p class="desc">Downloads per month of the Zowe CLI from both the <a
+                                    href="https://www.npmjs.com/package/@zowe/cli">NPM registry</a> and the <a
+                                    href="https://www.zowe.org/download.html">Zowe.org
+                                    downloads page</a></p>
+                            <div class="barGraph">
+                                <canvas id="cliDiffGraph" width="100" height="35"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="tab-pane fade" id="server" role="tabpanel" aria-labelledby="server-tab">
+                    <section id="smpe">
+                        <h3 class="sectionTitle">Server-side Downloads</h3>
+                        <div class="row">
+                            <div class="tableContainer cliTableContainer">
+                                <p class="desc">Downloads of each version of Zowe SMPE / PTFs from the <a
+                                        href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a>.</p>
+                                <table class="downloadsTable">
+                                    <tr>
+                                        <th>Version</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for(let i=11; i>= 0; i--){ %>
+                                        <tr>
+                                            <td>
+                                                <%= Object.keys(versions.sorted.zoweSMPE)[i] %>
+                                            </td>
+                                            <td>
+                                                <%= versions.sorted.zoweSMPE[Object.keys(versions.sorted.zoweSMPE)[i]]
+                                                    %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </table>
+                            </div>
+                            <div class="tableContainer cliTableContainer">
+                                <p class="desc">Downloads of each version of the Zowe convenience build from the
+                                    <a href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a>.
+                                </p>
+                                <table class="downloadsTable">
+                                    <tr>
+                                        <th>Version</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for(let i=11; i>= 0; i--){ %>
+                                        <tr>
+                                            <td>
+                                                <%= Object.keys(versions.sorted.zoweBinary)[i] %>
+                                            </td>
+                                            <td>
+                                                <%= versions.sorted.zoweBinary[Object.keys(versions.sorted.zoweBinary)[i]]
+                                                    %>
+                                            </td>
+                                        </tr>
+                                        <% } %>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="tableContainer">
+                                <p class="desc">Cumulative downloads of the Zowe Server-side components from the
+                                    <a href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a>.
+                                </p>
+                                <table id="explorerCumulativeDownloadsTable">
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Downloads</th>
+                                    </tr>
+                                    <% for(let i=Object.keys(server).length - 12>= 0 ? Object.keys(server).length -
+                                        12 :
+                                        0; i < Object.keys(server).length;i++){ %>
+                                            <tr>
+                                                <td>
+                                                    <%= dateToString(Object.keys(server)[i]) %>
+                                                </td>
+                                                <td>
+                                                    <%= server[Object.keys(server)[i]] %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                </table>
+                            </div>
+                            <div class="cumulativeDownloadsGraph">
+                                <p class="desc">Graphical visualization of the cumulative downloads of the Zowe
+                                    Server-side components from the <a
+                                        href="https://www.zowe.org/download.html">Zowe.org
+                                        downloads page</a>.</p>
+                                <canvas id="serverGraph" width="100" height="70"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="bottomGraphRow">
+                            <p class="desc">Downloads of the Zowe Server-side components each month from the <a
+                                    href="https://www.zowe.org/download.html">Zowe.org
+                                    downloads page</a>.</p>
+                            <div class="barGraph">
+                                <canvas id="serverDiffGraph" width="100" height="40"></canvas>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+        </main>
+        <script src="/javascripts/downloads.js"></script>
+        <script>
+            let explorerDownloadObject = JSON.parse('<%- JSON.stringify(explorer) %>');
+            displayExplorerData(explorerDownloadObject);
+        </script>
+        <script>
+            let serverDownloadObject = JSON.parse('<%- JSON.stringify(server) %>');
+            displayServerData(serverDownloadObject);
+        </script>
+        <script>
+            let cliDownloadObject = JSON.parse('<%- JSON.stringify(cli) %>');
+            displayCLIData(cliDownloadObject);
+        </script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+</body>
+
+</html>

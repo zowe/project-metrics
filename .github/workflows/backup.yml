@@ -1,0 +1,21 @@
+name: BACKUP
+
+on:
+  # schedule:
+  #     - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+jobs:
+  Backup:
+    runs-on: ubuntu-latest
+    name: DB Backup
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v2
+      - name: SSH Backup
+        uses: ./custom-workflow
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          user: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: "docker exec ${{ secrets.CONTAINER_NAME }} mongodump -d ${{ secrets.DB_NAME }} -o /dump/$(date +'%d-%m-%Y') -u ${{ secrets.DB_USER }} -p ${{ secrets.DB_PASS }} --authenticationDatabase ${{ secrets.DB_AUTH }}"

@@ -1,0 +1,62 @@
+#!/usr/bin/env node
+
+/*
+ * This program and the accompanying materials are made available under the terms of the
+ * Eclipse Public License v2.0 which accompanies this distribution, and is available at
+ * https://www.eclipse.org/legal/epl-v20.html
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Copyright Contributors to the Zowe Project.
+ *
+ */
+
+const app = require("../app");
+const debug = require("debug")("api:server");
+const http = require("http");
+
+const normalizePort = (val) => {
+  const port = parseInt(val, 10);
+  if (isNaN(port)) {
+    return val;
+  }
+  if (port >= 0) {
+    return port;
+  }
+  return false;
+};
+
+const onError = (error) => {
+  if (error.syscall !== "listen") {
+    throw error;
+  }
+  const bind = typeof port === "string" ? "Pipe " + port : "Port " + port;
+  switch (error.code) {
+    case "EACCES":
+      console.error(bind + " requires elevated privileges");
+      process.exit(1);
+    case "EADDRINUSE":
+      console.error(bind + " is already in use");
+      process.exit(1);
+    default:
+      throw error;
+  }
+};
+
+const onListening = () => {
+  const addr = server.address();
+  const bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
+  debug("Listening on " + bind);
+  console.log(
+    `Listening on ${process.env.EXTERNAL_API_URL || `localhost:${port}`}`
+  );
+};
+
+const port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
+
+const server = http.createServer(app);
+
+server.listen(port);
+server.on("error", onError);
+server.on("listening", onListening);
