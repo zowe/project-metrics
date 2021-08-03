@@ -3,3 +3,5 @@ client.env
 db.env
 node_modules
 metricsAnalyticsData.json
+dump/
+data/
