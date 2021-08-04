@@ -1,8 +1,8 @@
 name: BACKUP
 
 on:
-  # schedule:
-  #     - cron: '0 0 * * 0'
+  schedule:
+    - cron: "0 1 2,16 * *"
   workflow_dispatch:
 
 jobs:
@@ -10,12 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     name: DB Backup
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v2
       - name: SSH Backup
-        uses: ./custom-workflow
+        uses: zowe-actions/shared-actions/ssh-command@main
         with:
           host: ${{ secrets.SSH_HOST }}
           user: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: "docker exec ${{ secrets.CONTAINER_NAME }} mongodump -d ${{ secrets.DB_NAME }} -o /dump/$(date +'%d-%m-%Y') -u ${{ secrets.DB_USER }} -p ${{ secrets.DB_PASS }} --authenticationDatabase ${{ secrets.DB_AUTH }}"
+          script: "echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker exec ${{ secrets.DB_CONTAINER_NAME }} mongodump -d ${{ secrets.DB_NAME }} -o /dump/$(date +'%d-%m-%Y') -u ${{ secrets.DB_USER }} -p ${{ secrets.DB_PASS }} --authenticationDatabase ${{ secrets.DB_AUTH }}"
