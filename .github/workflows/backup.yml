@@ -16,5 +16,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           user: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: "echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker ps"
-          # exec ${{ secrets.DB_CONTAINER_NAME }} mongodump -d ${{ secrets.DB_NAME }} -o /dump/$(date +'%d-%m-%Y') -u ${{ secrets.DB_USER }} -p ${{ secrets.DB_PASS }} --authenticationDatabase ${{ secrets.DB_AUTH }}
+          script: "echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker exec ${{ secrets.DB_CONTAINER_NAME }} mongodump -d ${{ secrets.DB_NAME }} -o /dump/$(date +'%d-%m-%Y') -u ${{ secrets.DB_USER }} -p ${{ secrets.DB_PASS }} --authenticationDatabase ${{ secrets.DB_AUTH }}"
