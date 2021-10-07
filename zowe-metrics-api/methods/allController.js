@@ -30,5 +30,5 @@ exports.getAll = (req, res) => {
                     conformants: responses[4].data,
                 });
             })
-        );
+        ).catch((error) => console.log(error));
 };
