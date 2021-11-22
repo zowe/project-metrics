@@ -30,14 +30,16 @@ exports.getConformants = async (req, res) => {
             let apiml = parseInt($('.items-count')[0].children[2].data);
             let appFrmwrk = parseInt($('.items-count')[1].children[2].data);
             let cli = parseInt($('.items-count')[2].children[2].data);
+            let zoweExplorer = parseInt($('.items-count')[3].children[2].data);
     
             cachedConformantsData = {
                 url: `https://www.openmainframeproject.org/projects/zowe/conformance`,
-                products: apiml + appFrmwrk + cli,
+                products: apiml + appFrmwrk + cli + zoweExplorer,
                 breakdown: {
                     APIML: apiml,
                     AppFramework: appFrmwrk,
                     CLI: cli,
+                    ZoweExplorer: zoweExplorer,
                 },
             };
             cachedConformantsTime = Date.now();
