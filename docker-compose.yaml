@@ -30,6 +30,8 @@ services:
   metrics-db:
     image: mongo
     container_name: metrics-db
+    ports:
+      - "27017:27017"
     restart: always
     env_file:
       - db.env

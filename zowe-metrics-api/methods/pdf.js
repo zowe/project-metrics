@@ -12,9 +12,10 @@
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
-const npm = require('npm-stats-api');
 
 const generator = require('./pdfGeneration/generator.js');
+
+const { cumulativeNpmStats } = require('../methods/npmStatsData')
 
 const CLI = require('../models/clis');
 const Explorer = require('../models/explorers');
@@ -133,53 +134,37 @@ exports.generateReport = () => {
                         for (const plugin of pluginNames) {
                             let newItem;
 
-                            npm.stat(
+                            const totalDownloadsFromNPM = await cumulativeNpmStats(
                                 `@zowe/${plugin}-for-zowe-cli`,
                                 '2019-01-01',
-                                dt.toISOString().slice(0, 10),
-                                async (err, response) => {
-                                    switch (plugin) {
-                                        case `cics`:
-                                            newItem = new CICS({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                        case `db2`:
-                                            newItem = new DB2({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                        case `ims`:
-                                            newItem = new IMS({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                        case `mq`:
-                                            newItem = new MQ({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                        case `zos-ftp`:
-                                            newItem = new FTP({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                        case `secure-credential-store`:
-                                            newItem = new SCS({
-                                                date: dt,
-                                                value: response.downloads,
-                                            });
-                                            break;
-                                    }
+                                dt.toISOString().slice(0, 10)
+                                );
+                            const schemaData = {
+                                date: dt,
+                                value: totalDownloadsFromNPM,
+                            };
+                            switch (plugin) {
+                                case `cics`:
+                                    newItem = new CICS(schemaData);
+                                    break;
+                                case `db2`:
+                                    newItem = new DB2(schemaData);
+                                    break;
+                                case `ims`:
+                                    newItem = new IMS(schemaData);
+                                    break;
+                                case `mq`:
+                                    newItem = new MQ(schemaData);
+                                    break;
+                                case `zos-ftp`:
+                                    newItem = new FTP(schemaData);
+                                    break;
+                                case `secure-credential-store`:
+                                    newItem = new SCS(schemaData);
+                                    break;
+                            }
 
-                                    let savedItem = await newItem.save();
-                                }
-                            );
+                            let savedItem = await newItem.save();
                         }
 
                         // Slack
@@ -392,7 +377,8 @@ exports.generateReport = () => {
                             versionDownloads: versionDownloads,
                         });
                     })
-                );
+                )
+                .catch(err => console.log(err));
         });
 };
 
