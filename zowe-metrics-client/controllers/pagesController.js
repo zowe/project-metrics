@@ -33,12 +33,12 @@ exports.showHome = (req, res) => {
 
                 res.render('index', {
                     reports: reports,
-                    cli: convertToK(cli),
-                    explorer: convertToK(explorer),
-                    server: convertToK(server),
-                    slack: convertToK(slack),
-                    github: github,
-                    conformants: conformants,
+                    cli: cli ? convertToK(cli) : "-",
+                    explorer: explorer ? convertToK(explorer) : "-",
+                    server: server ? convertToK(server) : "-",
+                    slack: slack ? convertToK(slack) : "-",
+                    github: github || "-",
+                    conformants: conformants || "-",
                 });
             })
         );
