@@ -55,9 +55,13 @@ exports.getOMP = (req, res) => {
 };
 
 const getSlack = async () => {
-    let url = `https://slack.openmainframeproject.org/`;
-
-    const { data } = await axios.get(url);
-    const $ = cheerio.load(data);
-    return $('.total')[0].children[0].data;
+    try {
+        let url = `https://slack.openmainframeproject.org/`;
+    
+        const { data } = await axios.get(url);
+        const $ = cheerio.load(data);
+        return $('.total')[0].children[0].data;
+    } catch (error) {
+        return null;
+    }
 };
