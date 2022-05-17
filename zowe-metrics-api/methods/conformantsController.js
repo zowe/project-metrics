@@ -26,11 +26,11 @@ exports.getConformants = async (req, res) => {
             });
             const { data } = await axios.get(`${process.env.CONFORMANTS_URL}`, { httpsAgent: agent });
             const $ = cheerio.load(data);
-    
-            let apiml = parseInt($('.items-count')[0].children[2].data);
-            let appFrmwrk = parseInt($('.items-count')[1].children[2].data);
-            let cli = parseInt($('.items-count')[2].children[2].data);
-            let zoweExplorer = parseInt($('.items-count')[3].children[2].data);
+
+            let apiml = parseInt($('.items-cont')[0].children[0].data.trim().slice(1,-1));
+            let appFrmwrk = parseInt($('.items-cont')[1].children[0].data.trim().slice(1,-1));
+            let cli = parseInt($('.items-cont')[2].children[0].data.trim().slice(1,-1));
+            let zoweExplorer = parseInt($('.items-cont')[3].children[0].data.trim().slice(1,-1));
     
             cachedConformantsData = {
                 url: `https://www.openmainframeproject.org/projects/zowe/conformance`,
@@ -48,6 +48,20 @@ exports.getConformants = async (req, res) => {
         }
     } catch (err) {
         console.log(err);
+
+        cachedConformantsData = {
+            url: `https://www.openmainframeproject.org/projects/zowe/conformance`,
+            products: undefined,
+            breakdown: {
+                APIML: undefined,
+                AppFramework: undefined,
+                CLI: undefined,
+                ZoweExplorer: undefined,
+            },
+        };
+        cachedConformantsTime = Date.now();
+
+        res.json(cachedConformantsData);
     }
     
 };
