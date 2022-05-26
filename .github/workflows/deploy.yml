@@ -10,6 +10,7 @@ jobs:
   Deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: SSH Deploy
         uses: zowe-actions/shared-actions/ssh-command@main
         with:
