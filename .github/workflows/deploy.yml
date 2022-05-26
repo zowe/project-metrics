@@ -16,7 +16,4 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           user: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            cd ${{ secrets.METRICS_LOCATION }}
-            git pull
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d --build
+          script: cd ${{ secrets.METRICS_LOCATION }} && git pull && echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d --build
